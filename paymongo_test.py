@@ -1,7 +1,7 @@
 import time
 from paymongo import Paymongo
 
-secret_key = 'sk_test_ja5gesasd2323232sas121'
+secret_key = 'sk_test_.....'
 payment_intent_payload = {
     "data": {
         "attributes": {"amount": 10000, "payment_method_allowed": ["card"], "description": "test1",
