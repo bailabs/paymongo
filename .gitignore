@@ -1,2 +1,6 @@
 .idea
 venv
+dist
+build
+.env
+paymongo.egg-info
