@@ -7,6 +7,7 @@ with open('requirements.txt') as requirements:
 
 setup(
     name='paymongo',
+    description="Paymongo Python Library",
     version=version,
     author='Chris Ian Fiel',
     author_email='ccfiel@bai.ph',
