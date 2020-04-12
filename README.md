@@ -378,4 +378,5 @@ More cards [here](https://developers.paymongo.com/docs/testing), including [3D S
   - GrabPay guide - https://developers.paymongo.com/docs/accepting-grabpay-payments
 
 Made with :heart: by Chris Ian Fiel / Wela School System
+
 This package and documentaion is base on https://github.com/jofftiquez/paymongo. Thanks to Jofferson Ramirez Tiquez @jofftiquez!
