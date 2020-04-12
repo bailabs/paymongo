@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = '0.1.0dev'
+version = '0.1.1dev'
 
 with open('requirements.txt') as requirements:
     install_requires = requirements.read().split()
