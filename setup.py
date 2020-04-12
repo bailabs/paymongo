@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-version = '0.1.2dev'
+version = '0.1.3dev'
 
 with open('requirements.txt') as requirements:
     install_requires = requirements.read().split()
 
 setup(
-    name="example-pkg-ccfiel",  # Replace with your own username
+    name="paymongo",  # Replace with your own username
     version=version,
     author="Chris Ian Fiel",
     author_email="ccfiel@bai.ph",
