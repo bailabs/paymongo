@@ -49,7 +49,7 @@ python setup.py install
 ```python
 from paymongo import Paymongo
 
-secret_key = 'sk_test_ja5gekYdtRBVochpcK433ejp'
+secret_key = 'sk_test_......'
 payment_intent_payload = {
     "data": {
         "attributes": {"amount": 10000, "payment_method_allowed": ["card"], "description": "test1",
