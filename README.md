@@ -27,7 +27,6 @@ API.
   - [Retrieve](#webhooks-retrieve)
   - [Toggle (Enable or Disable)](#webhooks-toggle)
 - [Test Cards](#test-cards)
-- [Change Logs](#change-logs)
 - [FAQs](#faqs)
 
 ### INSTALLATION
