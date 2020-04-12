@@ -204,24 +204,23 @@ A Source is a resource to generate your customer's payment instrument. This is n
  * @param {string} data.attributes.redirect.success success url
  * @param {string} data.attributes.redirect.failed error url
  */
-const result = await paymongo.sources.create(data);
+result = paymongo.sources.create(data);
 ```
 
 *Payload*
 
 ```javascript
-{
-  data: {
-    attributes: {
-      type: 'gcash',
-      amount: 20000, // PHP200,
-      currency: 'PHP',
-      redirect: {
-        success: 'https://yoururl.com/success',
-        failed: 'https://yoururl.com/failed'
-      }
+payment_source_payload = {
+    "data": {
+        "attributes": {"type": "gcash",
+                       "amount": 10000,
+                       "currency": "PHP",
+                       "redirect": {
+                           "success": "https://wela.online",
+                           "failed": "https://bai.ph"
+                       }
+                       }
     }
-  }
 }
 ```
 
@@ -252,14 +251,15 @@ result = paymongo.payments.create(data);
 *Payload*
 
 ```javascript
-payment_source_payload = {
+payment_payload = {
     "data": {
-        "attributes": {"type": "gcash",
+        "attributes": {"description": "test2",
+                       "statement_descriptor": "test3",
                        "amount": 10000,
                        "currency": "PHP",
-                       "redirect": {
-                           "success": "https://wela.online",
-                           "failed": "https://bai.ph"
+                       "source": {
+                           "id": payment_source_id,
+                           "type": "source"
                        }
                        }
     }
