@@ -91,17 +91,19 @@ A `PaymentMethod` resource describes which payment method was used to fulfill a 
  * @param {number} data.attributes.details.exp_year Expiry year of the Credit/Debit Card.
  * @param {string} data.attributes.details.cvc CVC of the Credit/Debit Card.
  */
-const result = await paymongo.paymentMethods.create(data);
+result = paymongo.payment_methods.create(data);
 ```
 
 *Payload*
 
 ```js
+payment_method_payload = {
     "data": {
         "attributes": {"type": "card",
                        "details": {"card_number": "4343434343434345", "exp_month": 10, "exp_year": 22, "cvc": "123"}
                        }
     }
+}
 ```
 
 #### Payment Methods - Retrieve
@@ -110,7 +112,7 @@ const result = await paymongo.paymentMethods.create(data);
 /**
  * @param {string} id The PaymentMethod id
  */
-const result = await paymongo.payment_method.retrieve(id);
+result = paymongo.payment_method.retrieve(id);
 ```
 
 ### PAYMENT INTENTS
@@ -119,7 +121,7 @@ const result = await paymongo.payment_method.retrieve(id);
 
 A `PaymentIntent` resource is used to track and handle different states of the payment until it succeeds.
 
-> `paymongo.paymentIntents`
+> `paymongo.payment_intents`
 
 #### Payment Intents - Create
 
@@ -132,20 +134,18 @@ A `PaymentIntent` resource is used to track and handle different states of the p
  * @param {string[]} data.attributes.payment_method_allowed The list of payment method types that the PaymentIntent is allowed to use. Possible value is card for now.
  * @param {string} data.attributes.currency Three-letter ISO currency code, in uppercase. PHP is the only supported currency as of the moment.
  */
-const result = await paymongo.paymentIntents.create(data);
+result = paymongo.payment_intents.create(data);
 ```
 
 *Payload*
 
 ```javascript
-{
-  data: {
-    attributes: {
-      amount: 10000, // 10000 or 100 in money value is the smallest allowed amount.
-      currency: 'PHP', // Three-letter ISO currency code. Only supports PHP for now.
-      payment_method_allowed: ['card'] // The only available value for now is 'card'.
+payment_intent_payload = {
+    "data": {
+        "attributes": {"amount": 10000, "payment_method_allowed": ["card"], "description": "test1",
+                       "statement_descriptor": "test2",
+                       "payment_method_options": {"card": {"request_three_d_secure": "automatic"}}, "currency": "PHP"}
     }
-  }
 }
 ```
 
@@ -155,7 +155,7 @@ const result = await paymongo.paymentIntents.create(data);
 /**
  * @param {string} id token id
  */
-const result = await paymongo.paymentIntents.retrieve(id);
+result = paymongo.payment_intents.retrieve(id);
 ```
 
 **Attach to PaymentIntent**
@@ -168,18 +168,18 @@ const result = await paymongo.paymentIntents.retrieve(id);
  * @param {Object} data.attributes Payload attributes.
  * @param {string} data.attributes.payment_method Id of PaymentMethod to attach to the PaymentIntent.
  */
-const result = await paymongo.paymentIntents.attach(id, data);
+result = paymongo.payment_intents.attach(id, data);
 ```
 
 *Payload*
 
 ```javascript
-{
-  data: {
-    attributes: {
-      payment_method: 'abc123'
+payload = {
+    "data": {
+        "attributes": {"client_key": "card",
+                       "payment_method": method_id
+                       }
     }
-  }
 }
 ```
 
@@ -247,30 +247,30 @@ A `Payment` resource is an attempt by your customer to send you money in exchang
  * @param {string} data.attributes.source.id id of a Source resource
  * @param {string} data.attributes.source.type type of a Source resource. Possible value is 'source'.
  */
-const result = await paymongo.payments.create(data);
+result = paymongo.payments.create(data);
 ```
 
 *Payload*
 
 ```javascript
-{
-  data: {
-    attributes: {
-      amount: 30000,
-      currency: 'PHP',
-      source: {
-        id: 'abc', // Id of the Source resource.
-        type: 'source', // 
-      }
+payment_source_payload = {
+    "data": {
+        "attributes": {"type": "gcash",
+                       "amount": 10000,
+                       "currency": "PHP",
+                       "redirect": {
+                           "success": "https://wela.online",
+                           "failed": "https://bai.ph"
+                       }
+                       }
     }
-  }
 }
 ```
 
 #### Payments - List
 
 ```javascript
-const result = await paymongo.payments.list();
+result = paymongo.payments.list();
 ```
 
 *Result*
@@ -287,14 +287,8 @@ const result = await paymongo.payments.list();
 /**
  * @param {string} id payment id
  */
-const result = await paymongo.payments.retrieve();
+result = paymongo.payments.retrieve();
 ```
-
-### TOKENS
-
-> DEPRECATED
-
-[Official Docs](https://developers.paymongo.com/reference#token-resource)
 
 ### WEBHOOKS
 
@@ -333,7 +327,7 @@ const result = await paymongo.webhooks.create(data);
 #### Webhooks - List
 
 ```javascript
-const result = await paymongo.webhooks.list();
+result = paymongo.webhooks.list();
 ```
 
 *Result*
@@ -350,7 +344,7 @@ const result = await paymongo.webhooks.list();
 /**
  * @param {string} id Webhook id
  */
-const result = await paymongo.webhooks.retrieve(id);
+result = paymongo.webhooks.retrieve(id);
 ```
 
 #### Webhooks - Toggle
@@ -362,7 +356,7 @@ Enable or disable a webhook.
  * @param {string} id webhook id
  * @param {string} action 'enable' or 'disable'
  */
-const result = await paymongo.webhooks.toggle(id, action);
+result = paymongo.webhooks.toggle(id, action);
 ```
 
 ### TEST CARDS
@@ -378,19 +372,10 @@ const result = await paymongo.webhooks.toggle(id, action);
 
 More cards [here](https://developers.paymongo.com/docs/testing), including [3D Secure Test Cards](https://developers.paymongo.com/docs/testing#section-3-d-secure-test-card-numbers).
 
-### CHANGE LOGS
-
-- New syntax patterned with Stripe's Node.js library.
-- Enhanced method verbs
-- Depricated **Tokens**. See deprecation note [here](https://developers.paymongo.com/reference#token-resource).
-
 ### FAQs
 
 - How to make payment using gcash or grabpay?
   - GCash guide - https://developers.paymongo.com/docs/accepting-gcash-payments
   - GrabPay guide - https://developers.paymongo.com/docs/accepting-grabpay-payments
 
-- How to test a webhook?
-  - I have a web application still in development for testing any webooks. Follow this repo for updates.
-
-Made with :heart: by Jofferson Ramirez Tiquez
+Made with :heart: by Chris Ian Fiel / Wela School System
